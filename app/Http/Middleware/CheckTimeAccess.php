@@ -16,19 +16,8 @@ class CheckTimeAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Kiểm tra độ tuổi
-        $age = $request->query('age');
-        
-        if ($age !== null && $age < 18) {
-            return response()->json([
-                'message' => 'Bạn phải từ 18 tuổi trở lên để truy cập trang này',
-                'your_age' => $age
-            ], 403);
-        }
-        
-        // Kiểm tra thời gian
         $now = now();
-        $start = Carbon::parse('7:00:00');
+        $start = Carbon::parse('1:00:00');
         $end = Carbon::parse('20:00:00');
         if ($now->between($start, $end)) {
             return $next($request);

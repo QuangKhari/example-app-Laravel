@@ -32,4 +32,23 @@ class AuthController extends Controller
             return "Đăng Ký thất bại";
         }
     }
+    public function showAge()
+    {
+        return view('age');
+    }
+
+    public function saveAge(Request $request)
+    {
+        $age = $request->input('age');
+
+        // Validate tuổi
+        if (!$age || $age < 0 || $age > 150) {
+            return "Tuổi không hợp lệ";
+        }
+
+        // Lưu tuổi vào session
+        session(['age' => $age]);
+
+        return redirect('/age');
+    }
 }
