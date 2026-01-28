@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/hello', function () {
     return view('hello');
@@ -37,6 +38,9 @@ Route::get('/banco/{n}', function ($n) {
     return view('banco', ['n' => $n]);
 })->name('banco.display');
 Route::resource('test', TestController::class);
+
+Route::get('/signin', [AuthController::class, 'SignIn']);
+Route::post('/checksignin', [AuthController::class, 'CheckSignIn']);
 
 Route::fallback(function() {
     return view('error.404');
