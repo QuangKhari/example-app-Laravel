@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/hello', function () {
     return view('hello');
@@ -50,17 +51,25 @@ Route::get('/signin', [AuthController::class, 'SignIn']);
 Route::post('/checksignin', [AuthController::class, 'CheckSignIn']);
 
 // Routes cho nhập và kiểm tra tuổi
-Route::get('/input-age', function () {
-    return view('input_age');
-})->name('input.age');
+
 
 Route::post('/save-age', function (Request $request) {
     $age = $request->input('age');
     session(['age' => $age]);
-    return redirect('/input-age')->with('message', 'Tuổi đã được lưu!');
+    return redirect('/age')->with('message', 'Tuổi đã được lưu!');
 })->name('save.age');
 
 // Route protected với middleware CheckAge
 Route::get('/restricted', function () {
     return view('restricted');
 })->middleware('CheckAge')->name('restricted');
+
+Route::get('/admin', function () {
+    return view('layout.admin');
+});
+Route::resource('category', CategoryController::class);
+
+
+
+
+
